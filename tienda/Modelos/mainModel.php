@@ -67,3 +67,32 @@
 
             return $sql;
 		} /*-- Fin Funcion - End Function --*/
+
+        		/*----------  Funcion para ejecutar una consulta UPDATE preparada - Function to execute a prepared UPDATE query ----------*/
+		protected static function actualizar_datos($tabla,$datos,$condicion){
+			$query="UPDATE $tabla SET ";
+
+			$C=0;
+			foreach ($datos as $campo => $indice){
+				if($C<=0){
+					$query.=$campo."=".$indice["campo_marcador"];
+				}else{
+					$query.=",".$campo."=".$indice["campo_marcador"];
+				}
+				$C++;
+			}
+
+			$query.=" WHERE ".$condicion["condicion_campo"]."=".$condicion["condicion_marcador"];
+
+			$sql=self::conectar()->prepare($query);
+
+			foreach ($datos as $campo => $indice){
+				$sql->bindParam($indice["campo_marcador"],$indice["campo_valor"]);
+			}
+
+			$sql->bindParam($condicion["condicion_marcador"],$condicion["condicion_valor"]);
+
+			$sql->execute();
+
+			return $sql;
+		} /*-- Fin Funcion - End Function --*/
