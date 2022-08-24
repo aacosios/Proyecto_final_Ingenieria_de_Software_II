@@ -189,3 +189,71 @@
 			$cadena=stripslashes($cadena);
 			return $cadena;
 		} /*--  Fin Funcion - End Function --*/
+
+
+		/*---------- Funcion verificar datos (expresion regular) - Check data function (regular expression) ----------*/
+		protected static function verificar_datos($filtro,$cadena){
+			if(preg_match("/^".$filtro."$/", $cadena)){
+				return false;
+            }else{
+                return true;
+            }
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*---------- Funcion verificar fechas - Check dates function ----------*/
+		protected static function verificar_fecha($fecha){
+			$valores=explode('-',$fecha);
+			if(count($valores)==3 && checkdate($valores[1], $valores[2], $valores[0])){
+				return false;
+			}else{
+				return true;
+			}
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*---------- Funcion obtener nombre de mes - Get month name function ----------*/
+		public function obtener_nombre_mes($mes){
+			switch($mes){
+				case 1:
+					$nombre_mes="enero";
+				break;
+				case 2:
+					$nombre_mes="febrero";
+				break;
+				case 3:
+					$nombre_mes="marzo";
+				break;
+				case 4:
+					$nombre_mes="abril";
+				break;
+				case 5:
+					$nombre_mes="mayo";
+				break;
+				case 6:
+					$nombre_mes="junio";
+				break;
+				case 7:
+					$nombre_mes="julio";
+				break;
+				case 8:
+					$nombre_mes="agosto";
+				break;
+				case 9:
+					$nombre_mes="septiembre";
+				break;
+				case 10:
+					$nombre_mes="octubre";
+				break;
+				case 11:
+					$nombre_mes="noviembre";
+				break;
+				case 12:
+					$nombre_mes="diciembre";
+				break;
+				default:
+					$nombre_mes="No definido";
+				break;
+			}
+			return $nombre_mes;
+		} /*--  Fin Funcion - End Function --*/
