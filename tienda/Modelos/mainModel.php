@@ -257,3 +257,74 @@
 			}
 			return $nombre_mes;
 		} /*--  Fin Funcion - End Function --*/
+
+
+		/*----------  Funcion paginador de tablas - Table pager function ----------*/
+		protected static function paginador_tablas($pagina,$Npaginas,$url,$botones,$idioma){
+			if($idioma=="es"){
+				$txt_anterior="Anterior";
+				$txt_siguiente="Siguiente";
+			}else{
+				$txt_anterior="Previous";
+				$txt_siguiente="Next";
+			}
+			$tabla='<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
+
+			if($pagina==1){
+				$tabla.='<li class="page-item disabled" ><a class="page-link" ><i class="fas fa-angle-double-left"></i></a></li>';
+			}else{
+				$tabla.='
+				<li class="page-item" ><a class="page-link" href="'.$url.'1/"><i class="fas fa-angle-double-left"></i></a></li>
+				<li class="page-item" ><a class="page-link" href="'.$url.($pagina-1).'/">'.$txt_anterior.'</a></li>
+				';
+			}
+
+			$ci=0;
+			for($i=$pagina; $i<=$Npaginas; $i++){
+				if($ci>=$botones){
+					break;
+				}
+				if($pagina==$i){
+					$tabla.='<li class="page-item active" ><a class="page-link" href="'.$url.$i.'/">'.$i.'</a></li>';
+				}else{
+					$tabla.='<li class="page-item" ><a class="page-link" href="'.$url.$i.'/">'.$i.'</a></li>';
+				}
+				$ci++;
+			}
+
+			if($pagina==$Npaginas){
+				$tabla.='<li class="page-item disabled" ><a class="page-link" ><i class="fas fa-angle-double-right"></i></a></li>';
+			}else{
+				$tabla.='
+				<li class="page-item" ><a class="page-link" href="'.$url.($pagina+1).'/">'.$txt_siguiente.'</a></li>
+				<li class="page-item" ><a class="page-link" href="'.$url.$Npaginas.'/"><i class="fas fa-angle-double-right"></i></a></li>
+				';
+			}
+
+			$tabla.='</ul></nav>';
+			return $tabla;
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*----------  Funcion generar select - Generate select function ----------*/
+		public function generar_select($datos,$campo_db){
+			$check_select='';
+			$text_select='';
+			$count_select=1;
+			$select='';
+			foreach($datos as $row){
+
+				if($campo_db==$row){
+					$check_select='selected=""';
+					$text_select=' (Actual)';
+				}
+
+				$select.='<option value="'.$row.'" '.$check_select.'>'.$count_select.' - '.$row.$text_select.'</option>';
+
+				$check_select='';
+				$text_select='';
+				$count_select++;
+			}
+			return $select;
+		} /*--  Fin Funcion - End Function --*/
+	}
