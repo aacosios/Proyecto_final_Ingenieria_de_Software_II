@@ -127,3 +127,32 @@
 			$output=openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
 			return $output;
 		} /*--  Fin Funcion - End Function --*/
+
+		/*----------  Limitar cadenas de texto - Limit text strings  ----------*/
+		public function limitar_cadena($cadena,$limite,$sufijo){
+			if(strlen($cadena)>$limite){
+				return substr($cadena,0,$limite).$sufijo;
+			}else{
+				return $cadena;
+			}
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*----------  Funcion generar codigos aleatorios - Generate random codes function ----------*/
+		protected static function generar_codigo_aleatorio($longitud,$correlativo){
+			$codigo="";
+			$caracter="Letra";
+			for($i=1; $i<=$longitud; $i++){
+				if($caracter=="Letra"){
+					$letra_aleatoria=chr(rand(ord("a"),ord("z")));
+					$letra_aleatoria=strtoupper($letra_aleatoria);
+					$codigo.=$letra_aleatoria;
+					$caracter="Numero";
+				}else{
+					$numero_aleatorio=rand(0,9);
+					$codigo.=$numero_aleatorio;
+					$caracter="Letra";
+				}
+			}
+			return $codigo."-".$correlativo;
+		} /*--  Fin Funcion - End Function --*/
