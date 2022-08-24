@@ -96,3 +96,34 @@
 
 			return $sql;
 		} /*-- Fin Funcion - End Function --*/
+
+
+		/*---------- Funcion eliminar registro - Delete record function ----------*/
+        protected static function eliminar_registro($tabla,$campo,$id){
+            $sql=self::conectar()->prepare("DELETE FROM $tabla WHERE $campo=:ID");
+
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        } /*-- Fin Funcion - End Function --*/
+
+
+		/*----------  Encriptar cadenas - Encrypt strings ----------*/
+		public function encryption($string){
+			$output=FALSE;
+			$key=hash('sha256', SECRET_KEY);
+			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
+			$output=openssl_encrypt($string, METHOD, $key, 0, $iv);
+			$output=base64_encode($output);
+			return $output;
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*----------  Desencriptar cadenas - Decrypt strings ----------*/
+		protected static function decryption($string){
+			$key=hash('sha256', SECRET_KEY);
+			$iv=substr(hash('sha256', SECRET_IV), 0, 16);
+			$output=openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
+			return $output;
+		} /*--  Fin Funcion - End Function --*/
