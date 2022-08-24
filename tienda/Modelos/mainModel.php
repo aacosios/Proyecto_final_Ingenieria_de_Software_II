@@ -30,3 +30,19 @@
 			$sql->execute();
 			return $sql;
 		} /*--  Fin Funcion - End Function --*/
+
+        		/*----------  Funcion desconectar de DB - Function disconnect from DB  ----------*/
+		public function desconectar($consulta){
+			global $conexion, $consulta;
+			$consulta=null;
+			$conexion=null;
+			return $consulta;
+		} /*--  Fin Funcion - End Function --*/
+
+
+		/*----------  Funcion ejecutar consultas simples - Run simple queries function  ----------*/
+		protected static function ejecutar_consulta_simple($consulta){
+			$sql=self::conectar()->prepare($consulta);
+			$sql->execute();
+			return $sql;
+		} /*--  Fin Funcion - End Function --*/
