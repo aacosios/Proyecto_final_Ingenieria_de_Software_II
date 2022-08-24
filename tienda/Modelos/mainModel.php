@@ -46,3 +46,24 @@
 			$sql->execute();
 			return $sql;
 		} /*--  Fin Funcion - End Function --*/
+
+        
+		/*---------- Funcion datos tabla - Table data function ----------*/
+        public function datos_tabla($tipo,$tabla,$campo,$id){
+			$tipo=self::limpiar_cadena($tipo);
+			$tabla=self::limpiar_cadena($tabla);
+			$campo=self::limpiar_cadena($campo);
+
+			$id=self::decryption($id);
+			$id=self::limpiar_cadena($id);
+
+            if($tipo=="Unico"){
+                $sql=self::conectar()->prepare("SELECT * FROM $tabla WHERE $campo=:ID");
+                $sql->bindParam(":ID",$id);
+            }elseif($tipo=="Normal"){
+                $sql=self::conectar()->prepare("SELECT $campo FROM $tabla");
+            }
+            $sql->execute();
+
+            return $sql;
+		} /*-- Fin Funcion - End Function --*/
